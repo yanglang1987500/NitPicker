@@ -1,0 +1,8 @@
+/node_modules
+.vscode
+!/dist/dll/
+*.scssc
+tsconfig.build.json
+/manifest.json
+/dist_temp/**/*
+/versions/*

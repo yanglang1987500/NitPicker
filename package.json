@@ -1,0 +1,176 @@
+{
+  "name": "nitpicker",
+  "displayName": "Nit Picker",
+  "description": "Code Review Tool",
+  "publisher": "sniyve",
+  "version": "0.0.8",
+  "engines": {
+    "vscode": "^1.27.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:nitList",
+    "onCommand:nitpicker.addNit"
+  ],
+  "icon": "images/icon.jpg",
+  "main": "./out/extension.js",
+  "keywords": [
+    "code review",
+    "review",
+    "comments"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "nitpicker.addNit",
+        "title": "Nit Picker: Add Nit"
+      },
+      {
+        "command": "nitpicker.refreshNit",
+        "title": "Nit Picker: Refresh Record",
+        "icon": {
+          "dark": "images/dark/refresh.svg",
+          "light": "images/light/refresh.svg"
+        }
+      },
+      {
+        "command": "nitpicker.locateNit",
+        "title": "Nit Picker: Locate Source File",
+        "icon": {
+          "dark": "images/dark/source.svg",
+          "light": "images/light/source.svg"
+        }
+      },
+      {
+        "command": "nitpicker.deleteRecord",
+        "title": "Delete Record",
+        "icon": {
+          "dark": "images/dark/close.svg",
+          "light": "images/light/close.svg"
+        }
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "nitpicker-explore",
+          "title": "Nit Picker",
+          "icon": "images/light/code-review.svg"
+        }
+      ]
+    },
+    "views": {
+      "nitpicker-explore": [
+        {
+          "id": "nitList",
+          "name": "Nit Picker Record"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "nitList",
+        "contents": "No code review record file found."
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "",
+          "command": "nitpicker.addNit",
+          "group": "cmdGroup@1"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "nitpicker.refreshNit",
+          "when": "view == nitList",
+          "group": "navigation@0"
+        },
+        {
+          "command": "nitpicker.locateNit",
+          "when": "view == nitList",
+          "group": "navigation@1"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "nitpicker.deleteRecord",
+          "when": "view == nitList && viewItem == Record",
+          "group": "inline"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "nitpicker.addNit",
+        "key": "ctrl+shift+n",
+        "mac": "ctrl+shift+n"
+      }
+    ],
+    "configuration": {
+      "id": "nitpicker",
+      "type": "object",
+      "title": "Nit Picker",
+      "properties": {
+        "nitpicker.baseUrl": {
+          "type": "string",
+          "title": "The base URL for a referenced file without the SHA",
+          "description": "The base URL is used to build a full link to the file (e.g. \"https://github.com/foo/bar/blob/b0b4...0175/src/file.txt#L12-19\"). It will be appended with the GIT SHA if available followed by the relative path of the file and the selected lines as an anker. This setting is skipped when the setting `code-review.customUrl` is defined.",
+          "default": ""
+        },
+        "nitpicker.customUrl": {
+          "type": "string",
+          "title": "The URL mask with placeholders for a referenced file without the SHA",
+          "description": "The custom URL is used to build a full link to the file.\nThe following placeholders are available:\n - {sha}: insert the SHA ref for the file\n - {file}: insert the file name/path\n - {start}: insert the start of the lines selection as an anker\n - {end}: insert the end of the lines selection as an anker\ne.g. \"https://gitlab.com/foo/bar/baz/-/blob/{sha}/src/{file}#L{start}-{end}\" becomes this in the end: \"https://gitlab.com/foo/bar/baz/-/blob/b0b4...0175/src/file.txt#L12-19\"",
+          "default": ""
+        },
+        "nitpicker.categories": {
+          "type": "array",
+          "title": "Categories",
+          "description": "Configure categories to choose for review categorization",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "Architecture",
+            "Best Practices",
+            "Code-Style",
+            "Complexity",
+            "Error Handling",
+            "Maintainability",
+            "Performance",
+            "Reliability",
+            "Separation of concerns"
+          ]
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^10.12.21",
+    "@types/vscode": "^1.27.0",
+    "glob": "^7.1.4",
+    "mocha": "^6.1.4",
+    "typescript": "^3.3.1",
+    "tslint": "^5.12.1",
+    "vscode-test": "^1.2.0"
+  },
+  "dependencies": {
+    "@types/lodash-es": "^4.17.3",
+    "git-commit-id": "^2.0.1",
+    "handlebars": "^4.7.6",
+    "lodash-es": "^4.17.15"
+  }
+}
