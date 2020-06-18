@@ -16,4 +16,4 @@ A Code Review Tool, which let you review code more easily, more convenient colla
 
 ## Want to thank me? Buy me a coffee ~
 
-![Ne7c4A.png](https://github.com/yanglang1987500/NitPicker/blob/master/images/receive.png?raw=true)
+![Ne7c4A.png](https://pic.downk.cc/item/5eeb2d7b14195aa594ac2f79.png)
