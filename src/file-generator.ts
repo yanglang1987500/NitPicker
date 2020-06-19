@@ -80,7 +80,7 @@ export class FileGenerator {
     return new Promise(resolve => {
       const result = list.map(record => {
         const { id, sha, filename, url, lines, title, comment, priority, category, additional } = record;
-        return `"${id}","${sha}","${filename}","${url}","${lines}","${Escape.encode(title)}","${Escape.decode(comment)}","${priority}","${category}","${additional}"${EOL}`;
+        return `"${id}","${sha}","${filename}","${url}","${lines}","${Escape.encode(title)}","${Escape.encode(comment)}","${priority}","${category}","${additional}"${EOL}`;
       });
       fs.writeFile(this.filePath(), [`${FileGenerator.csvFileHeader}${EOL}`, ...result].join(''), () => resolve());
     });

@@ -58,10 +58,15 @@ exports.guid = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, fun
 });
 exports.EscapeComma = '$COMMA$';
 exports.EscapeQuote = '$QUOTE$';
+exports.EscapeEnter = '<br>';
 exports.EscapeCommaReg = '\\$COMMA\\$';
 exports.EscapeQuoteReg = '\\$QUOTE\\$';
+exports.EscapeEnterReg = '<br>';
 exports.Escape = {
-    encode: (str) => str ? str.replace(/"/g, exports.EscapeQuote).replace(/,/g, exports.EscapeComma) : '',
-    decode: (str) => str ? str.replace(new RegExp(`${exports.EscapeQuoteReg}`, 'g'), '"').replace(new RegExp(`${exports.EscapeCommaReg}`, 'g'), ',') : ''
+    encode: (str) => str ? str.replace(/"/g, exports.EscapeQuote).replace(/,/g, exports.EscapeComma).replace(new RegExp('\n', 'g'), exports.EscapeEnter) : '',
+    decode: (str) => str ? str
+        .replace(new RegExp(`${exports.EscapeQuoteReg}`, 'g'), '"')
+        .replace(new RegExp(`${exports.EscapeCommaReg}`, 'g'), ',')
+        .replace(new RegExp(`${exports.EscapeEnterReg}`, 'g'), '\n') : ''
 };
 //# sourceMappingURL=workspace-util.js.map

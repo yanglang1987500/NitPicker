@@ -58,10 +58,15 @@ export const guid = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g
 
 export const EscapeComma = '$COMMA$';
 export const EscapeQuote = '$QUOTE$';
+export const EscapeEnter = '<br>';
 export const EscapeCommaReg = '\\$COMMA\\$';
 export const EscapeQuoteReg = '\\$QUOTE\\$';
+export const EscapeEnterReg = '<br>';
 
 export const Escape = {
-  encode: (str: string) => str ? str.replace(/"/g, EscapeQuote).replace(/,/g, EscapeComma) : '',
-  decode: (str: string) => str ? str.replace(new RegExp(`${EscapeQuoteReg}`, 'g'), '"').replace(new RegExp(`${EscapeCommaReg}`, 'g'), ',') : ''
+  encode: (str: string) => str ? str.replace(/"/g, EscapeQuote).replace(/,/g, EscapeComma).replace(new RegExp('\n', 'g'), EscapeEnter) : '',
+  decode: (str: string) => str ? str
+    .replace(new RegExp(`${EscapeQuoteReg}`, 'g'), '"')
+    .replace(new RegExp(`${EscapeCommaReg}`, 'g'), ',')
+    .replace(new RegExp(`${EscapeEnterReg}`, 'g'), '\n') : ''
 };

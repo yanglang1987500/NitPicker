@@ -83,7 +83,7 @@ class FileGenerator {
             return new Promise(resolve => {
                 const result = list.map(record => {
                     const { id, sha, filename, url, lines, title, comment, priority, category, additional } = record;
-                    return `"${id}","${sha}","${filename}","${url}","${lines}","${workspace_util_1.Escape.encode(title)}","${workspace_util_1.Escape.decode(comment)}","${priority}","${category}","${additional}"${os_1.EOL}`;
+                    return `"${id}","${sha}","${filename}","${url}","${lines}","${workspace_util_1.Escape.encode(title)}","${workspace_util_1.Escape.encode(comment)}","${priority}","${category}","${additional}"${os_1.EOL}`;
                 });
                 fs.writeFile(this.filePath(), [`${FileGenerator.csvFileHeader}${os_1.EOL}`, ...result].join(''), () => resolve());
             });
