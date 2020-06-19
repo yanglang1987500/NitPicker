@@ -56,7 +56,14 @@ function activate(context) {
         if (webview.modifyId && webview.modifyId === element.id)
             webview.disposePanel();
     });
-    context.subscriptions.push(addNoteRegistration, refreshRecordRegistration, openRecordRegistration, deleteRecordRegistration, locateSourceRegistration);
+    const linkGitRegistration = vscode_1.commands.registerCommand('nitpicker.linkGit', (element) => {
+        const link = element.link;
+        if (link)
+            vscode_1.commands.executeCommand('vscode.open', vscode_1.Uri.parse(link.replace(/\\/g, '/').replace(/\/\//g, '/')));
+        else
+            vscode_1.window.showWarningMessage(`This record has no commit link. Or you have not config baseUrl / customUrl yet.`);
+    });
+    context.subscriptions.push(addNoteRegistration, refreshRecordRegistration, openRecordRegistration, deleteRecordRegistration, locateSourceRegistration, linkGitRegistration);
 }
 exports.activate = activate;
 function deactivate() { }

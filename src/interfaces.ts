@@ -43,6 +43,7 @@ export interface ITreeItem extends Partial<TreeItem> {
   position?: string;
   records?: ITreeItem[];
   category?: string;
+  link?: string;
 }
 
 export enum TreeItemType {

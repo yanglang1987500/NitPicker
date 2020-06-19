@@ -56,7 +56,8 @@ class NitRecordProvider {
                 position: record.lines,
                 type: interfaces_1.TreeItemType.Record,
                 priority: record.priority,
-                category: record.category
+                category: record.category,
+                link: record.url
             }))
         }));
     }

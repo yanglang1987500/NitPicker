@@ -46,7 +46,8 @@ export class NitRecordProvider implements vscode.TreeDataProvider<vscode.TreeIte
         position: record.lines,
         type: TreeItemType.Record,
         priority: record.priority,
-        category: record.category
+        category: record.category,
+        link: record.url
       }))
     }));
   }

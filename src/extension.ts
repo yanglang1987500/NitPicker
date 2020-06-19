@@ -1,10 +1,10 @@
-import { commands, workspace, window, ExtensionContext, WorkspaceFolder, Uri, Range, Position, ViewColumn, TreeItem, Selection, TextEditorRevealType } from 'vscode';
+import { commands, workspace, window, ExtensionContext, WorkspaceFolder, Uri, Range, Position, ViewColumn, TreeItem, Selection, TextEditorRevealType, env } from 'vscode';
 import * as path from 'path';
 import { NitRecordProvider } from './treeView';
 import { getWorkspaceFolder } from './utils/workspace-util';
 import { WebViewComponent } from './webview';
 import { ReviewCommentService } from './review-comment';
-import { IRecord } from './interfaces';
+import { IRecord, ITreeItem } from './interfaces';
 import { FileGenerator } from './file-generator';
 
 export function activate(context: ExtensionContext) {
@@ -52,7 +52,16 @@ export function activate(context: ExtensionContext) {
     if (webview.modifyId && webview.modifyId === element.id) webview.disposePanel();
   });
 
-	context.subscriptions.push(addNoteRegistration, refreshRecordRegistration, openRecordRegistration, deleteRecordRegistration, locateSourceRegistration);
+  const linkGitRegistration = commands.registerCommand('nitpicker.linkGit', (element: TreeItem) => {
+    const link = (element as ITreeItem).link;
+    if (link)
+      commands.executeCommand('vscode.open', Uri.parse(link.replace(/\\/g, '/').replace(/\/\//g, '/')));
+    else
+      window.showWarningMessage(`This record has no commit link. Or you have not config baseUrl / customUrl yet.`);
+  });
+
+  context.subscriptions.push(addNoteRegistration, refreshRecordRegistration, openRecordRegistration,
+    deleteRecordRegistration, locateSourceRegistration, linkGitRegistration);
 }
 
 export function deactivate() {}
