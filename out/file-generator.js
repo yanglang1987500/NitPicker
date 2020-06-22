@@ -92,7 +92,7 @@ class FileGenerator {
     append(record) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id, sha, filename, url, lines, title, comment, priority, category, additional } = record;
-            fs.appendFileSync(this.filePath(), `"${id}","${sha}","${filename}","${url}","${lines}","${workspace_util_1.Escape.encode(title)}","${workspace_util_1.Escape.decode(comment)}","${priority}","${category}","${additional}"${os_1.EOL}`);
+            fs.appendFileSync(this.filePath(), `"${id}","${sha}","${filename}","${url}","${lines}","${workspace_util_1.Escape.encode(title)}","${workspace_util_1.Escape.encode(comment)}","${priority}","${category}","${additional}"${os_1.EOL}`);
         });
     }
     /**

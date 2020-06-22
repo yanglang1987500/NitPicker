@@ -90,7 +90,7 @@ export class FileGenerator {
     const { id, sha, filename, url, lines, title, comment, priority, category, additional } = record;
     fs.appendFileSync(
       this.filePath(),
-      `"${id}","${sha}","${filename}","${url}","${lines}","${Escape.encode(title)}","${Escape.decode(comment)}","${priority}","${category}","${additional}"${EOL}`,
+      `"${id}","${sha}","${filename}","${url}","${lines}","${Escape.encode(title)}","${Escape.encode(comment)}","${priority}","${category}","${additional}"${EOL}`,
     );
   }
 
