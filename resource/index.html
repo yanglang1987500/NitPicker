@@ -78,6 +78,8 @@
           }
           input.traffic-light-color {
             appearance: none;
+            -webkit-appearance: inherit;
+            filter: brightness(.7);
             position: relative;
             top: 10px;
             width: 30px;
@@ -92,24 +94,30 @@
           }
           input#high {
             background-color: #b30000;
+            box-shadow: 0 0 .6em #b30000;
           }
           input#high:checked {
             background-color: #ff0000;
             box-shadow: 0 0 3em #ff3333;
+            filter: brightness(1);
           }
           input#medium {
             background-color: #b2b300;
+            box-shadow: 0 0 .6em #b2b300;
           }
           input#medium:checked {
             background-color: #ffff00;
             box-shadow: 0 0 3em #ffff33;
+            filter: brightness(1);
           }
           input#low {
             background-color: #00b300;
+            box-shadow: 0 0 .6em #00b300;
           }
           input#low:checked {
             background-color: #00ff00;
             box-shadow: 0 0 3em #33ff33;
+            filter: brightness(1);
           }
     
           /* form arrangement */
