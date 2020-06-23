@@ -68,7 +68,12 @@ class FileGenerator {
                 }).on('line', line => {
                     if (count > 0 && line && line.trim() !== '') {
                         const [id, sha, filename, url, lines, title, comment, priority, category, additional] = line.split(',').map(i => i.replace(/^"(.*)"$/, '$1'));
-                        list.push({ id, sha, filename, url, lines, title: workspace_util_1.Escape.decode(title), comment: workspace_util_1.Escape.decode(comment), priority: priority ? parseInt(priority, 10) : '', category, additional });
+                        list.push({ id, sha, filename, url, lines,
+                            title: workspace_util_1.Escape.decode(title),
+                            comment: workspace_util_1.Escape.decode(comment),
+                            priority: priority ? parseInt(priority, 10) : '',
+                            category,
+                            additional: workspace_util_1.Escape.decode(additional) });
                     }
                     count++;
                 }).on('close', () => {
@@ -83,7 +88,7 @@ class FileGenerator {
             return new Promise(resolve => {
                 const result = list.map(record => {
                     const { id, sha, filename, url, lines, title, comment, priority, category, additional } = record;
-                    return `"${id}","${sha}","${filename}","${url}","${lines}","${workspace_util_1.Escape.encode(title)}","${workspace_util_1.Escape.encode(comment)}","${priority}","${category}","${additional}"${os_1.EOL}`;
+                    return `"${id}","${sha}","${filename}","${url}","${lines}","${workspace_util_1.Escape.encode(title)}","${workspace_util_1.Escape.encode(comment)}","${priority}","${category}","${workspace_util_1.Escape.encode(additional)}"${os_1.EOL}`;
                 });
                 fs.writeFile(this.filePath(), [`${FileGenerator.csvFileHeader}${os_1.EOL}`, ...result].join(''), () => resolve());
             });
@@ -92,7 +97,7 @@ class FileGenerator {
     append(record) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id, sha, filename, url, lines, title, comment, priority, category, additional } = record;
-            fs.appendFileSync(this.filePath(), `"${id}","${sha}","${filename}","${url}","${lines}","${workspace_util_1.Escape.encode(title)}","${workspace_util_1.Escape.encode(comment)}","${priority}","${category}","${additional}"${os_1.EOL}`);
+            fs.appendFileSync(this.filePath(), `"${id}","${sha}","${filename}","${url}","${lines}","${workspace_util_1.Escape.encode(title)}","${workspace_util_1.Escape.encode(comment)}","${priority}","${category}","${workspace_util_1.Escape.encode(additional)}"${os_1.EOL}`);
         });
     }
     /**

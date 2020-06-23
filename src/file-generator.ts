@@ -66,7 +66,12 @@ export class FileGenerator {
       }).on('line', line => {
         if (count > 0 && line && line.trim() !== '') {
           const [id, sha, filename, url, lines, title, comment, priority, category, additional] = line.split(',').map(i => i.replace(/^"(.*)"$/, '$1'));
-          list.push({ id, sha, filename, url, lines, title: Escape.decode(title), comment: Escape.decode(comment), priority: priority ? parseInt(priority, 10) : '', category, additional });
+          list.push({ id, sha, filename, url, lines,
+            title: Escape.decode(title),
+            comment: Escape.decode(comment),
+            priority: priority ? parseInt(priority, 10) : '',
+            category, 
+            additional: Escape.decode(additional) });
         }
         count++;
       }).on('close', () => {
@@ -80,7 +85,7 @@ export class FileGenerator {
     return new Promise(resolve => {
       const result = list.map(record => {
         const { id, sha, filename, url, lines, title, comment, priority, category, additional } = record;
-        return `"${id}","${sha}","${filename}","${url}","${lines}","${Escape.encode(title)}","${Escape.encode(comment)}","${priority}","${category}","${additional}"${EOL}`;
+        return `"${id}","${sha}","${filename}","${url}","${lines}","${Escape.encode(title)}","${Escape.encode(comment)}","${priority}","${category}","${Escape.encode(additional)}"${EOL}`;
       });
       fs.writeFile(this.filePath(), [`${FileGenerator.csvFileHeader}${EOL}`, ...result].join(''), () => resolve());
     });
@@ -90,7 +95,7 @@ export class FileGenerator {
     const { id, sha, filename, url, lines, title, comment, priority, category, additional } = record;
     fs.appendFileSync(
       this.filePath(),
-      `"${id}","${sha}","${filename}","${url}","${lines}","${Escape.encode(title)}","${Escape.encode(comment)}","${priority}","${category}","${additional}"${EOL}`,
+      `"${id}","${sha}","${filename}","${url}","${lines}","${Escape.encode(title)}","${Escape.encode(comment)}","${priority}","${category}","${Escape.encode(additional)}"${EOL}`,
     );
   }
 
