@@ -21,6 +21,13 @@ function activate(context) {
     const recordProvider = new treeView_1.NitRecordProvider(workspaceRoot);
     const commentService = new review_comment_1.ReviewCommentService(workspaceRoot, recordProvider);
     const webview = new webview_1.WebViewComponent(context);
+    var watcher = vscode_1.workspace.createFileSystemWatcher(`**/${file_generator_1.FileGenerator.defaultFileName}.csv`);
+    watcher.onDidChange((e) => {
+        recordProvider.refresh();
+    });
+    watcher.onDidDelete(e => {
+        recordProvider.refresh();
+    });
     vscode_1.window.registerTreeDataProvider('nitList', recordProvider);
     const addNoteRegistration = vscode_1.commands.registerCommand('nitpicker.addNit', () => {
         commentService.initReviewFile();
@@ -31,12 +38,13 @@ function activate(context) {
         recordProvider.refresh();
     });
     const locateSourceRegistration = vscode_1.commands.registerCommand('nitpicker.locateNit', () => {
+        commentService.initReviewFile();
         vscode_1.window.showTextDocument(vscode_1.Uri.file(path.join(workspaceRoot, `${file_generator_1.FileGenerator.defaultFileName}.csv`)), {
             preview: false,
             viewColumn: vscode_1.ViewColumn.One
         });
     });
-    // position 6:32-6:32
+    // position 6:32-6:32|7:1-8:23
     const openRecordRegistration = vscode_1.commands.registerCommand('nitpicker.openRecord', (resource, position, comment) => __awaiter(this, void 0, void 0, function* () {
         const selections = position.split('|').filter(i => !!i).map(p => {
             /^(\d+):(\d+)-(\d+):(\d+)$/.test(p);

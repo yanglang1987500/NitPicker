@@ -18,7 +18,7 @@ class FileGenerator {
     constructor(workspaceRoot) {
         this.workspaceRoot = workspaceRoot;
         this.defaultFileExtension = '.csv';
-        const configFileName = vscode_1.workspace.getConfiguration().get('nitpicker.filename');
+        const configFileName = vscode_1.workspace.getConfiguration().get('nitpicker.filename'); // disable config for now
         if (configFileName) {
             FileGenerator.defaultFileName = configFileName;
         }
@@ -63,6 +63,9 @@ class FileGenerator {
                 const list = [];
                 let count = 0;
                 const readable = fs.createReadStream(this.filePath());
+                readable.on('error', () => {
+                    resolve(list);
+                });
                 readline.createInterface({
                     input: readable
                 }).on('line', line => {

@@ -33,7 +33,6 @@ class WebViewComponent {
                 case 'submit':
                     const comment = JSON.parse(message.text);
                     commentService.addComment(comment);
-                    vscode_1.commands.executeCommand('nitpicker.refreshNit');
                     this.disposePanel();
                     return;
                 case 'cancel':

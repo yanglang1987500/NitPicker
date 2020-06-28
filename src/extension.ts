@@ -12,6 +12,14 @@ export function activate(context: ExtensionContext) {
   const recordProvider = new NitRecordProvider(workspaceRoot);
   const commentService = new ReviewCommentService(workspaceRoot, recordProvider);
   const webview = new WebViewComponent(context);
+  var watcher = workspace.createFileSystemWatcher(`**/${FileGenerator.defaultFileName}.csv`);
+
+  watcher.onDidChange((e) => {
+    recordProvider.refresh();
+  });
+  watcher.onDidDelete(e => {
+    recordProvider.refresh();
+  });
 
   window.registerTreeDataProvider('nitList', recordProvider);
   const addNoteRegistration = commands.registerCommand('nitpicker.addNit', () => {
@@ -25,6 +33,7 @@ export function activate(context: ExtensionContext) {
   });
 
   const locateSourceRegistration = commands.registerCommand('nitpicker.locateNit', () => {
+    commentService.initReviewFile();
     window.showTextDocument(Uri.file(path.join(workspaceRoot, `${FileGenerator.defaultFileName}.csv`)), {
       preview: false,
       viewColumn: ViewColumn.One

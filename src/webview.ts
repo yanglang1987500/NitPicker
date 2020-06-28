@@ -32,7 +32,6 @@ export class WebViewComponent {
           case 'submit':
             const comment = JSON.parse(message.text) as IRecord;
             commentService.addComment(comment);
-            commands.executeCommand('nitpicker.refreshNit');
             this.disposePanel();
             return;
           case 'cancel':

@@ -11,7 +11,7 @@ export class FileGenerator {
   static csvFileHeader = 'id,sha,filename,url,lines,title,comment,priority,category,additional';
 
   constructor(private workspaceRoot: string) {
-    const configFileName = workspace.getConfiguration().get('nitpicker.filename') as string;
+    const configFileName = workspace.getConfiguration().get('nitpicker.filename') as string; // disable config for now
     if (configFileName) {
       FileGenerator.defaultFileName = configFileName;
     }
@@ -61,6 +61,9 @@ export class FileGenerator {
       const list: IRecord[] = [];
       let count = 0;
       const readable = fs.createReadStream(this.filePath());
+      readable.on('error', () => {
+        resolve(list);
+      });
       readline.createInterface({
         input: readable
       }).on('line', line => {
