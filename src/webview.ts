@@ -1,4 +1,4 @@
-import { window, ViewColumn, ExtensionContext, workspace, commands, WebviewPanel } from 'vscode';
+import { window, ViewColumn, ExtensionContext, workspace, commands, WebviewPanel, Uri } from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import { IRecord } from './interfaces';
@@ -24,7 +24,10 @@ export class WebViewComponent {
       },
     );
     this.panel.webview.html = this.getWebviewContent();
-
+    this.panel.iconPath = {
+      dark: Uri.file(path.join(__filename, "..", "..", 'images', 'dark', 'bug.svg')),
+      light: Uri.file(path.join(__filename, "..", "..", 'images', 'light', 'bug.svg')),
+    };
     // Handle messages from the webview
     this.panel.webview.onDidReceiveMessage(
       (message) => {
