@@ -52,6 +52,10 @@ class WebViewComponent {
         this.panel = vscode_1.window.createWebviewPanel('text', 'Modify code review comment', { viewColumn: vscode_1.ViewColumn.Beside }, {
             enableScripts: true,
         });
+        this.panel.iconPath = {
+            dark: vscode_1.Uri.file(path.join(__filename, "..", "..", 'images', 'dark', 'bug.svg')),
+            light: vscode_1.Uri.file(path.join(__filename, "..", "..", 'images', 'light', 'bug.svg')),
+        };
         this.panel.webview.html = this.getWebviewContent();
         this.panel.webview.postMessage({
             command: 'setComment',

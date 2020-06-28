@@ -3,7 +3,7 @@
   "displayName": "Nit Picker",
   "description": "Code Review Tool",
   "publisher": "sniyve",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.27.0"
   },

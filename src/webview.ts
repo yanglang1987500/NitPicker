@@ -59,7 +59,10 @@ export class WebViewComponent {
         enableScripts: true,
       },
     );
-
+    this.panel.iconPath = {
+      dark: Uri.file(path.join(__filename, "..", "..", 'images', 'dark', 'bug.svg')),
+      light: Uri.file(path.join(__filename, "..", "..", 'images', 'light', 'bug.svg')),
+    };
     this.panel.webview.html = this.getWebviewContent();
     this.panel.webview.postMessage({
       command: 'setComment',
