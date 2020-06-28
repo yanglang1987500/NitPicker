@@ -31,7 +31,7 @@ export function activate(context: ExtensionContext) {
     });
   });
 
-  // position 6:32-6:32
+  // position 6:32-6:32|7:1-8:23
   const openRecordRegistration = commands.registerCommand('nitpicker.openRecord', async (resource: Uri, position: string, comment: IRecord) => {
     const selections = position.split('|').filter(i => !!i).map(p => {
       /^(\d+):(\d+)-(\d+):(\d+)$/.test(p);
