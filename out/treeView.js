@@ -45,7 +45,7 @@ class NitRecordProvider {
             return p;
         }, {});
         this.datas = Object.keys(groupDictionary).map(group => ({
-            label: group.replace(/[^\\]*\\/ig, ""),
+            label: group.split(path.sep).pop(),
             description: `${this.workspaceRoot}${group}`,
             type: interfaces_1.TreeItemType.File,
             records: groupDictionary[group].map(record => ({

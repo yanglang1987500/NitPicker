@@ -35,7 +35,7 @@ export class NitRecordProvider implements vscode.TreeDataProvider<vscode.TreeIte
       return p;
     }, {} as { [key: string]: IRecord[] });
     this.datas = Object.keys(groupDictionary).map(group => ({
-      label: group.replace(/[^\\]*\\/ig,""),
+      label: group.split(path.sep).pop(),
       description: `${this.workspaceRoot}${group}`,
       type: TreeItemType.File,
       records: groupDictionary[group].map(record => ({
